@@ -1,0 +1,9 @@
+- README.md with project overview
+- `requirements.txt` or `environment.yml`
+- `README.md` Setup & Run Guide
+- Clean folder structure (source under `src/`)
+- `.env.example` and environment notes
+- GitHub repo with commits and branches
+- Documentation: architecture + chosen libraries
+- 5-minute screen recording demo with voice-over
+- Final push to GitHub between 4:00 PM–5:00 PM

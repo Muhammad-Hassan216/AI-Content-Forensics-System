@@ -1,0 +1,22 @@
+{
+    "results":  [
+                    {
+                        "label":  "Human-written",
+                        "ensemble":  0.23249557233082907,
+                        "ml_prob":  0.319004733989265,
+                        "heuristic_prob":  0.14598641067239312
+                    },
+                    {
+                        "label":  "Human-written",
+                        "ensemble":  0.49453437260611033,
+                        "ml_prob":  0.657044317815082,
+                        "heuristic_prob":  0.3320244273971386
+                    },
+                    {
+                        "label":  "Human-written",
+                        "ensemble":  0.2496809409017816,
+                        "ml_prob":  0.31398229976367664,
+                        "heuristic_prob":  0.18537958203988655
+                    }
+                ]
+}

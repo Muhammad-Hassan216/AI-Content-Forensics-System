@@ -1,0 +1,204 @@
+{
+  "Human-like": {
+    "text": "I wrote this after checking the source twice and then compared the results with the original note.",
+    "features": {
+      "avg_word_length": 4.764705882352941,
+      "type_token_ratio": 0.8823529411764706,
+      "punctuation_ratio": 0.01020408163265306,
+      "stopword_ratio": 0.35294117647058826,
+      "repeat_word_fraction": 0.06666666666666667,
+      "word_count": 17,
+      "raw_text": "I wrote this after checking the source twice and then compared the results with the original note."
+    },
+    "detection": {
+      "score": 0.11444010711254979,
+      "label": "Human-written",
+      "heuristic_prob": 0.2143469080777821,
+      "ml_prob": 0.014533306147317493
+    },
+    "explanation": {
+      "label": "Human-written",
+      "score": 0.11444010711254979,
+      "contributions": {
+        "avg_word_length": {
+          "raw": 0.1588,
+          "percent": 26.4
+        },
+        "type_token_ratio": {
+          "raw": -0.3529,
+          "percent": 58.7
+        },
+        "punctuation_ratio": {
+          "raw": -0.0204,
+          "percent": 3.4
+        },
+        "stopword_ratio": {
+          "raw": -0.0353,
+          "percent": 5.9
+        },
+        "repeat_word_fraction": {
+          "raw": 0.0333,
+          "percent": 5.5
+        }
+      },
+      "token_contributions": {
+        "compared": 0.127,
+        "original": 0.127,
+        "checking": 0.127,
+        "the": 0.0646,
+        "and": -0.0353,
+        "with": -0.0353,
+        "this": -0.0353,
+        "then": 0.0,
+        "I": 0.0,
+        "wrote": 0.0,
+        "note": 0.0,
+        "results": 0.0,
+        "source": 0.0,
+        "after": 0.0,
+        "twice": 0.0
+      }
+    },
+    "ml_prob": 0.014533306147317493
+  },
+  "AI-like": {
+    "text": "This comprehensive analysis highlights the multifaceted implications of the proposed framework in a concise and structured manner.",
+    "features": {
+      "avg_word_length": 6.647058823529412,
+      "type_token_ratio": 0.9411764705882353,
+      "punctuation_ratio": 0.007692307692307693,
+      "stopword_ratio": 0.4117647058823529,
+      "repeat_word_fraction": 0.0625,
+      "word_count": 17,
+      "raw_text": "This comprehensive analysis highlights the multifaceted implications of the proposed framework in a concise and structured manner."
+    },
+    "detection": {
+      "score": 0.6229801738002808,
+      "label": "AI-generated",
+      "heuristic_prob": 0.2532641901665738,
+      "ml_prob": 0.9926961574339878
+    },
+    "explanation": {
+      "label": "AI-generated",
+      "score": 0.6229801738002808,
+      "contributions": {
+        "avg_word_length": {
+          "raw": 0.2216,
+          "percent": 32.3
+        },
+        "type_token_ratio": {
+          "raw": -0.3765,
+          "percent": 54.9
+        },
+        "punctuation_ratio": {
+          "raw": -0.0154,
+          "percent": 2.2
+        },
+        "stopword_ratio": {
+          "raw": -0.0412,
+          "percent": 6.0
+        },
+        "repeat_word_fraction": {
+          "raw": 0.0312,
+          "percent": 4.6
+        }
+      },
+      "token_contributions": {
+        "comprehensive": 0.2881,
+        "multifaceted": 0.2659,
+        "implications": 0.2659,
+        "structured": 0.2216,
+        "highlights": 0.2216,
+        "framework": 0.1994,
+        "proposed": 0.1773,
+        "analysis": 0.1773,
+        "in": -0.0412,
+        "a": -0.0412,
+        "This": -0.0412,
+        "and": -0.0412,
+        "of": -0.0412,
+        "the": 0.0212,
+        "manner": 0.0,
+        "concise": 0.0
+      }
+    },
+    "ml_prob": 0.9926961574339878
+  },
+  "Long AI-like (demo)": {
+    "text": "In recent years, rapid advancements in generative models have produced highly coherent and contextually relevant text. This example demonstrates verbosity, formal phrasing, and low punctuation density commonly found in model-generated outputs.",
+    "features": {
+      "avg_word_length": 6.46875,
+      "type_token_ratio": 0.90625,
+      "punctuation_ratio": 0.0205761316872428,
+      "stopword_ratio": 0.1875,
+      "repeat_word_fraction": 0.06896551724137931,
+      "word_count": 32,
+      "raw_text": "In recent years, rapid advancements in generative models have produced highly coherent and contextually relevant text. This example demonstrates verbosity, formal phrasing, and low punctuation density commonly found in model-generated outputs."
+    },
+    "detection": {
+      "score": 0.6310572338599694,
+      "label": "AI-generated",
+      "heuristic_prob": 0.26235443917981766,
+      "ml_prob": 0.999760028540121
+    },
+    "explanation": {
+      "label": "AI-generated",
+      "score": 0.6310572338599694,
+      "contributions": {
+        "avg_word_length": {
+          "raw": 0.2156,
+          "percent": 32.1
+        },
+        "type_token_ratio": {
+          "raw": -0.3625,
+          "percent": 53.9
+        },
+        "punctuation_ratio": {
+          "raw": -0.0412,
+          "percent": 6.1
+        },
+        "stopword_ratio": {
+          "raw": -0.0188,
+          "percent": 2.8
+        },
+        "repeat_word_fraction": {
+          "raw": 0.0345,
+          "percent": 5.1
+        }
+      },
+      "token_contributions": {
+        "contextually": 0.2587,
+        "demonstrates": 0.2587,
+        "advancements": 0.2587,
+        "punctuation": 0.2372,
+        "generative": 0.2156,
+        "verbosity": 0.194,
+        "generated": 0.194,
+        "commonly": 0.1725,
+        "phrasing": 0.1725,
+        "produced": 0.1725,
+        "coherent": 0.1725,
+        "relevant": 0.1725,
+        "in": 0.0502,
+        "and": 0.0502,
+        "This": -0.0188,
+        "In": -0.0188,
+        "text": 0.0,
+        "recent": 0.0,
+        "models": 0.0,
+        "years": 0.0,
+        "rapid": 0.0,
+        "found": 0.0,
+        "low": 0.0,
+        "density": 0.0,
+        "example": 0.0,
+        "formal": 0.0,
+        "highly": 0.0,
+        "outputs": 0.0,
+        "have": 0.0,
+        "model": 0.0
+      }
+    },
+    "ml_prob": 0.999760028540121
+  }
+}

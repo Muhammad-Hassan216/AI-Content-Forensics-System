@@ -1,0 +1,102 @@
+{\rtf1\ansi\deff0
+{\fonttbl{\f0 Calibri;}{\f1 Consolas;}}
+\viewkind4\uc1\pard\sa180\sl240\slmult1\f0\fs22
+\par\b\fs32 Documentation \u8212? AI Content Forensics System\b0\fs22\par
+\par
+This document summarizes architecture, chosen libraries, setup & run steps, calibration instructions, testing, and the final submission checklist.\par
+\par
+\par\pard\brdrb\brdrs\brdrw10\par
+\par
+\par\b\fs28 1. Project Overview\b0\fs22\par
+\par
+\par\tab• Purpose: Detect whether a text is AI\u8209?generated and provide explainable evidence (feature contributions and token highlights).\par
+\par\tab• Audience: Hackathon judges, reviewers, and researchers who need a fast, interpretable detector.\par
+\par
+\par\b\fs28 2. Architecture (high level)\b0\fs22\par
+\par
+\par\tab• UI: `app.py` \u8212? Streamlit wide layout, sidebar controls, single/batch input modes, and a detailed result panel. Uses `src/token_highlighter.py` for token highlights.\par
+\par\tab• Feature extraction: `src/feature_extractor.py` \u8212? computes interpretable features (avg word length, type/token ratio, punctuation ratio, stopword ratio, repeat word fraction, word_count).\par
+\par\tab• Heuristic detector: `src/detector.py` \u8212? maps features to a heuristic probability via weighted sum + sigmoid.\par
+\par\tab• Classifier: `src/classifier.py` \u8212? trains/loads either a sklearn TF\u8209?IDF + LogisticRegression pipeline (`models/model.joblib`) or falls back to `src/simple_classifier.py` which is a pure\u8209?Python Naive Bayes saved at `models/simple_model.json`.\par
+\par\tab• Explainer: `src/explainer.py` \u8212? computes feature contributions and token contributions for explainability.\par
+\par\tab• Batch: `scripts/batch_server.py` \u8212? lightweight HTTP endpoint for programmatic predictions (POST `/predict`).\par
+\par
+\par\b\fs28 3. Key files\b0\fs22\par
+\par
+\par\tab• `app.py` \u8212? Streamlit application (entry point).\par
+\par\tab• `scripts/train_model.py` \u8212? train / calibrate script. Use `--calibrate path/to/labeled.csv`.\par
+\par\tab• `run_demo.py` \u8212? CLI demo that saves `demo_output.json`.\par
+\par\tab• `models/` \u8212? saved models (`model.joblib` for sklearn, `simple_model.json` for fallback).\par
+\par\tab• `wheels/` \u8212? optional offline wheel files for Windows Python 3.13 (use `pip install --no-index --find-links=...`).\par
+\par\tab• `ROMAN_URDU_README.md` \u8212? Roman\u8209?Urdu explainer for judges; printable via `scripts/markdown_to_pdf.py`.\par
+\par
+\par\b\fs28 4. Setup & Run (Windows example)\b0\fs22\par
+\par
+1. Create & activate venv (PowerShell):\par
+\par\f1\fs18
+python -m venv .venv-1\par
+& ".venv-1\\Scripts\\Activate.ps1"\par
+\par\f0\fs22
+2. Install dependencies (online):\par
+\par\f1\fs18
+python -m pip install --upgrade pip\par
+python -m pip install -r requirements.txt\par
+\par\f0\fs22
+3. Run Streamlit app:\par
+\par\f1\fs18
+& ".venv-1\\Scripts\\Activate.ps1"\par
+python -m streamlit run app.py\par
+\par\f0\fs22
+4. Train / calibrate model on labeled CSV (optional):\par
+\par\f1\fs18
+python scripts\\train_model.py --calibrate path\\to\\labeled.csv\par
+\par\f0\fs22
+\par
+Offline wheels: if network unstable, download wheel files on another machine and install locally:\par
+\par\f1\fs18
+python -m pip install --no-index --find-links="C:\\path\\to\\wheels" scikit-learn scipy joblib\par
+\par\f0\fs22
+\par
+\par\b\fs28 5. Improving accuracy (practical steps)\b0\fs22\par
+\par
+1. Collect representative labeled data (20\u8211?200 samples per class minimum). CSV format: `text,label` where `label` is `0` (human) or `1` (ai).\par
+2. Run `python scripts\\train_model.py --calibrate labeled.csv` to retrain sklearn pipeline (if scikit-learn installed) or update fallback model via `train_from_dataset()`.\par
+3. Evaluate with a held-out test set and adjust `ml_weight` or ensemble threshold.\par
+4. Optional: augment features (readability scores, POS tag distributions, perplexity from small LM) for greater robustness.\par
+\par
+\par\b\fs28 6. Testing & QA\b0\fs22\par
+\par
+\par\tab• Unit tests: run `python -m pytest -q` (tests located in `tests/`).\par
+\par\tab• Quick sanity: `python scripts\\run_sample_analysis.py` to reproduce sample scores.\par
+\par
+\par\b\fs28 7. Submission checklist (adjust to meet hackathon rules)\b0\fs22\par
+\par
+\par\tab• README.md with project overview \u8212? present.\par
+\par\tab• `requirements.txt` \u8212? present.\par
+\par\tab• Setup & Run guide \u8212? present in README and here.\par
+\par\tab• Clean folder structure with `src/` \u8212? present.\par
+\par\tab• `.env.example` \u8212? present.\par
+\par\tab• GitHub repo with commits & branch \u8212? please push before deadline.\par
+\par\tab• Documentation: `downloads/DOCUMENTATION.md` and `PROJECT_OVERVIEW.md` \u8212? present.\par
+\par\tab• 5-minute screen recording with voice-over \u8212? to be recorded by team (script below).\par
+\par\tab• Final push to GitHub between 4:00\u8211?5:00 PM \u8212? coordinate and push now.\par
+\par
+\par\b\fs28 8. Demo recording script (5 minutes)\b0\fs22\par
+\par
+1. 0:00\u8211?0:20 \u8212? One\u8209?line project goal and interface overview.\par
+2. 0:20\u8211?1:20 \u8212? Paste an AI example, Analyze, show token highlights and metrics.\par
+3. 1:20\u8211?2:20 \u8212? Paste a human example, show contrast in features and final label.\par
+4. 2:20\u8211?3:20 \u8212? Upload CSV batch and download results.\par
+5. 3:20\u8211?4:20 \u8212? Explain model architecture (TF\u8209?IDF + LR & fallback), how to calibrate, and where code lives.\par
+6. 4:20\u8211?5:00 \u8212? Closing remarks and where to find docs and repo link.\par
+\par
+\par\b\fs28 9. Contact / Next steps\b0\fs22\par
+\par
+If you want, I can:\par
+\par\tab• create a ZIP release with code + models,\par
+\par\tab• prepare a short Git commit message and run the final push for you,\par
+\par\tab• or retrain on any labeled CSV you upload.\par
+\par
+Files placed in this folder:\par
+\par\tab• `downloads/DOCUMENTATION.md` (this file)\par
+}
