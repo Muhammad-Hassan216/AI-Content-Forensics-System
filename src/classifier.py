@@ -1,5 +1,6 @@
 import os
 MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'model.joblib')
+CALIBRATION_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'calibration.json')
 
 def is_sklearn_available():
     try:
@@ -106,3 +107,16 @@ def predict_proba(texts, model=None):
         return simple_predict(texts, model=model)
     except Exception:
         return None
+
+
+def load_calibrated_threshold(default=0.5):
+    try:
+        import json
+        if os.path.exists(CALIBRATION_PATH):
+            with open(CALIBRATION_PATH, 'r', encoding='utf-8') as f:
+                payload = json.load(f)
+            threshold = float(payload.get('threshold', default))
+            return max(0.0, min(1.0, threshold))
+    except Exception:
+        pass
+    return default

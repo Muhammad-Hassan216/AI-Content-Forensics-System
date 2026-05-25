@@ -1,21 +1,21 @@
-text,label
-I checked the source and wrote this summary after careful review.,0
-Yesterday I visited the lab and took notes on the experiment results.,0
-The meeting concluded with specific action items assigned to each member.,0
-I prefer to write in a conversational tone with some informal expressions.,0
-This paragraph reflects my personal experience and opinions about the topic.,0
-The team discussed the issue openly and decided on a practical next step.,0
-I drafted the report myself after comparing two different references.,0
-We had a short discussion about the data and then fixed the mistake.,0
-I am sharing my own thoughts based on the notes I collected.,0
-The explanation came from a real review and a manual check.,0
-This comprehensive analysis highlights the multifaceted implications of the proposed framework.,1
-The model generates coherent and contextually rich passages at scale with consistent style.,1
-This synthetic example demonstrates the verbose and formal phrasing common in generated text.,1
-The architecture produces text with low variability in lexical choice and high fluency.,1
-Automated generation often yields longer sentences with balanced structure and formal tone.,1
+text,label,,
+I checked the source and wrote this summary after careful review.,0,,
+Yesterday I visited the lab and took notes on the experiment results.,0,,
+The meeting concluded with specific action items assigned to each member.,0,,
+I prefer to write in a conversational tone with some informal expressions.,0,,
+This paragraph reflects my personal experience and opinions about the topic.,0,,
+The team discussed the issue openly and decided on a practical next step.,0,,
+I drafted the report myself after comparing two different references.,0,,
+We had a short discussion about the data and then fixed the mistake.,0,,
+I am sharing my own thoughts based on the notes I collected.,0,,
+The explanation came from a real review and a manual check.,0,,
+This comprehensive analysis highlights the multifaceted implications of the proposed framework.,1,,
+The model generates coherent and contextually rich passages at scale with consistent style.,1,,
+This synthetic example demonstrates the verbose and formal phrasing common in generated text.,1,,
+The architecture produces text with low variability in lexical choice and high fluency.,1,,
+Automated generation often yields longer sentences with balanced structure and formal tone.,1,,
 The response is polished, generalized, and presented in a highly structured manner.,1
-The passage uses broad language with repeated academic phrasing and minimal personal detail.,1
-Overall, the generated output maintains clarity while avoiding concrete lived experience.,1
-This paragraph reflects an optimized synthesis of ideas with formal wording and smooth transitions.,1
+The passage uses broad language with repeated academic phrasing and minimal personal detail.,1,,
+Overall, the generated output maintains clarity while avoiding concrete lived experience.,1,
+This paragraph reflects an optimized synthesis of ideas with formal wording and smooth transitions.,1,,
 The content is organized, neutral, and highly consistent across multiple related statements.,1

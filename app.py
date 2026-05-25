@@ -14,28 +14,28 @@ st.markdown(
     """
     <style>
         :root {
-            --bg: #f4f6fb;
-            --panel: rgba(255, 255, 255, 0.90);
+            --bg: #f3efe7;
+            --panel: rgba(255, 252, 246, 0.92);
             --panel-strong: #ffffff;
-            --border: rgba(15, 23, 42, 0.08);
-            --text: #0f172a;
-            --muted: #667085;
-            --accent: #1d4ed8;
+            --border: rgba(17, 24, 39, 0.10);
+            --text: #111827;
+            --muted: #5f6b7a;
+            --accent: #b45309;
             --accent-2: #0f766e;
-            --accent-soft: rgba(29, 78, 216, 0.10);
-            --shadow: 0 22px 52px rgba(15, 23, 42, 0.08);
+            --accent-soft: rgba(180, 83, 9, 0.10);
+            --shadow: 0 22px 50px rgba(17, 24, 39, 0.10);
         }
 
         html, body, [class*="css"] {
-            font-family: "Inter", "Segoe UI", "SF Pro Display", system-ui, sans-serif;
+            font-family: "Segoe UI", "Aptos", "Trebuchet MS", system-ui, sans-serif;
             color: var(--text);
         }
 
         .stApp {
             background:
-                radial-gradient(circle at top left, rgba(29, 78, 216, 0.10), transparent 28%),
-                radial-gradient(circle at top right, rgba(15, 118, 110, 0.08), transparent 26%),
-                linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+                radial-gradient(circle at top left, rgba(180, 83, 9, 0.12), transparent 24%),
+                radial-gradient(circle at top right, rgba(15, 118, 110, 0.10), transparent 28%),
+                linear-gradient(180deg, #fffaf3 0%, #f1ece2 100%);
         }
 
         .block-container {
@@ -45,7 +45,7 @@ st.markdown(
         }
 
         section[data-testid="stSidebar"] {
-            background: rgba(255, 255, 255, 0.88);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 246, 238, 0.96));
             border-right: 1px solid var(--border);
             padding-top: 1rem;
         }
@@ -57,7 +57,9 @@ st.markdown(
         }
 
         .hero-shell {
-            background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(241,245,249,0.74));
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,248,238,0.90)),
+                radial-gradient(circle at top right, rgba(180, 83, 9, 0.06), transparent 32%);
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
             border-radius: 28px;
@@ -75,7 +77,7 @@ st.markdown(
         }
 
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 2.55rem;
             line-height: 1.05;
             font-weight: 800;
             color: var(--text);
@@ -160,6 +162,53 @@ st.markdown(
             box-shadow: 0 14px 32px rgba(37, 99, 235, 0.18);
         }
 
+        .feature-strip {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.85rem;
+            margin: 0 0 1.15rem 0;
+        }
+
+        .feature-tile {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 0.9rem 1rem;
+            box-shadow: 0 10px 26px rgba(17, 24, 39, 0.05);
+        }
+
+        .feature-tile-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-tile-body {
+            font-size: 0.92rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .input-shell {
+            background: rgba(255, 255, 255, 0.80);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 1rem 1rem 0.85rem;
+            box-shadow: 0 12px 28px rgba(17, 24, 39, 0.05);
+            margin-bottom: 1rem;
+        }
+
+        .result-card {
+            background: rgba(255,255,255,0.94);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1rem;
+            box-shadow: 0 12px 30px rgba(17, 24, 39, 0.05);
+        }
+
         .sidebar-title {
             font-size: 1.08rem;
             font-weight: 800;
@@ -190,6 +239,17 @@ st.markdown(
         .feature-box pre {
             white-space: pre-wrap;
         }
+
+        @media (max-width: 900px) {
+            .feature-strip,
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
     </style>
     """,
     unsafe_allow_html=True,
@@ -209,14 +269,46 @@ def metric_card(label, value, note="", accent="#2563eb"):
     )
 
 
+def tile(title, body):
+    st.markdown(
+        f"""
+        <div class="feature-tile">
+            <div class="feature-tile-title">{title}</div>
+            <div class="feature-tile-body">{body}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 st.markdown(
     """
     <div class="hero-shell">
-        <div class="hero-kicker">Production Application</div>
+        <div class="hero-kicker">Forensic text detection</div>
         <h1 class="hero-title">AI Content Forensics System</h1>
         <div class="hero-copy">
-            <strong>Purpose:</strong> AI-generated text detection with explainable evidence, premium presentation, and a clean workflow for judges, reviewers, and live walkthroughs.
-            Use the sidebar to load curated samples, upload batches, or paste your own text. Click <em>Analyze</em> to run predictions.
+            <strong>Purpose:</strong> Detect AI-generated writing, explain the score, and present the evidence in a clean, judge-friendly layout.
+            Use the controls on the left, then analyze a single passage or a batch of text.
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    """
+    <div class="feature-strip">
+        <div class="feature-tile">
+            <div class="feature-tile-title">What it does</div>
+            <div class="feature-tile-body">Classifies text as human-written or AI-generated and shows the main signals behind the result.</div>
+        </div>
+        <div class="feature-tile">
+            <div class="feature-tile-title">How it works</div>
+            <div class="feature-tile-body">Combines a trained model with transparent heuristic features, then explains the final score.</div>
+        </div>
+        <div class="feature-tile">
+            <div class="feature-tile-title">Best for</div>
+            <div class="feature-tile-body">Hackathon demos, quick checks, and walkthroughs where the reasoning matters as much as the answer.</div>
         </div>
     </div>
     """,
@@ -242,8 +334,8 @@ sample_texts = {
 }
 
 with st.sidebar:
-    st.markdown('<div class="sidebar-title">Application Controls</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sidebar-note">Compact controls for sample loading, sensitivity tuning, and ensemble adjustment.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-title">Analysis controls</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-note">Pick a sample, tune sensitivity, and decide how much the ML model should influence the score.</div>', unsafe_allow_html=True)
     sample_choice = st.selectbox("Load sample text", ["Custom", *sample_texts.keys()])
     threshold = st.slider("Detection threshold", 0.0, 1.0, 0.5)
     st.markdown('<div class="compact-rule"></div>', unsafe_allow_html=True)
@@ -260,23 +352,25 @@ with st.sidebar:
     input_mode = st.selectbox("Input mode", ["Single", "Multi-line", "Upload CSV"])
     sample_quick_run = st.checkbox("Auto-run on load (use for recording)", value=False)
     st.markdown("---")
-    st.write("Recommended: use `Long AI-like` during walkthrough to show charts and feature contributions.")
+    st.caption("Recommended demo sample: Long AI-like")
 
 default_text = sample_texts.get(sample_choice, "") if sample_choice != "Custom" else ""
 
 # Main input area adapts to chosen mode
+st.markdown('<div class="input-shell">', unsafe_allow_html=True)
 if input_mode == "Upload CSV":
     uploaded = st.file_uploader("Upload CSV/TXT with a `text` column or one text per line", type=["csv", "txt"])
     text = ""
 else:
     placeholder = "Paste text here" if input_mode == "Single" else "Paste multiple texts separated by a blank line (\n\n)"
     text = st.text_area(placeholder, value=default_text, height=320)
+st.markdown('</div>', unsafe_allow_html=True)
 
 col1, col2 = st.columns([1.2, 0.8], gap="large")
 with col1:
     analyze_clicked = st.button("Analyze")
     with col2:
-        st.write("Presentation flow: input → analyze → evidence → decision")
+        st.info("Flow: input -> analyze -> evidence -> decision")
 
 if sample_quick_run and sample_choice != "Custom":
     analyze_clicked = True
@@ -347,7 +441,12 @@ if analyze_clicked:
 
     # counts
     counts = df['label'].value_counts().to_dict()
-    st.markdown(f"**Counts:** {counts}")
+    count_cols = st.columns(2)
+    with count_cols[0]:
+        st.markdown(f"<div class='result-card'><div class='section-label'>Counts</div><div style='font-size:1.35rem;font-weight:800'>{counts}</div></div>", unsafe_allow_html=True)
+    with count_cols[1]:
+        avg_score = float(df['ensemble'].mean()) if not df.empty else 0.0
+        st.markdown(f"<div class='result-card'><div class='section-label'>Average confidence</div><div style='font-size:1.35rem;font-weight:800'>{avg_score:.2%}</div></div>", unsafe_allow_html=True)
 
     # allow download CSV
     import io, csv
@@ -402,3 +501,11 @@ if analyze_clicked:
             ax.tick_params(axis='x', rotation=20)
             fig.tight_layout()
             st.pyplot(fig, clear_figure=True)
+
+            with st.expander("Why this result?"):
+                st.write("High-level signals used by the detector:")
+                st.write("- Average word length")
+                st.write("- Type-token ratio")
+                st.write("- Punctuation density")
+                st.write("- Stopword ratio")
+                st.write("- Repeat word fraction")

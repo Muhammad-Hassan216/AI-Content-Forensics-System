@@ -15,6 +15,7 @@ if ROOT not in sys.path:
 
 from src.feature_extractor import extract_features
 from src.detector import detect
+from src.explainer import explain
 
 HOST = '0.0.0.0'
 PORT = 8000
@@ -23,10 +24,28 @@ class Handler(BaseHTTPRequestHandler):
     def _send(self, code, data):
         body = json.dumps(data).encode('utf-8')
         self.send_response(code)
+        # CORS headers to allow direct browser JS clients
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.send_header('Content-Type', 'application/json')
         self.send_header('Content-Length', str(len(body)))
         self.end_headers()
         self.wfile.write(body)
+
+    def do_OPTIONS(self):
+        # respond to CORS preflight
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
+
+    def do_GET(self):
+        if self.path == '/health':
+            self._send(200, {'ok': True})
+            return
+        self._send(404, {'error': 'not found'})
 
     def do_POST(self):
         if self.path != '/predict':
@@ -47,7 +66,16 @@ class Handler(BaseHTTPRequestHandler):
         for t in texts:
             f = extract_features(t)
             d = detect(f, text=t, threshold=threshold, ml_weight=ml_weight)
-            results.append({'label': d.get('label'), 'ensemble': d.get('score'), 'ml_prob': d.get('ml_prob'), 'heuristic_prob': d.get('heuristic_prob')})
+            e = explain(f, d)
+            results.append({
+                'text': t,
+                'label': d.get('label'),
+                'ensemble': d.get('score'),
+                'ml_prob': d.get('ml_prob'),
+                'heuristic_prob': d.get('heuristic_prob'),
+                'features': f,
+                'explanation': e,
+            })
 
         self._send(200, {'results': results, 'threshold': threshold, 'ml_weight': ml_weight, 'count': len(results)})
 

@@ -1,6 +1,3 @@
-from pathlib import Path
-
-
 def detect(features, text=None, threshold=0.5, ml_weight=0.5):
     """
     Simple heuristic detector: compute a score from weighted features.

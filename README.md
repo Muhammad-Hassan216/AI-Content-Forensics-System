@@ -1,78 +1,112 @@
-AI Content Forensics System
+# AI Content Forensics System
 
-Detects whether text is AI-generated and explains reasoning behind detection. This repository contains a simple prototype for local demonstrations and a minimal UI.
-This repository contains a compact, explainable system to detect AI‑generated text and present evidence in a polished UI for judges and reviewers.
+A fast, explainable Python demo that estimates whether a piece of text is AI-generated and shows the reasoning behind the decision.
 
-Quick pointers:
-- App entry: `app.py` — Streamlit UI (wide layout, premium presentation)
-- CLI demo: `run_demo.py` — quick sample runs and `demo_output.json`
-- Trainer: `scripts/train_model.py` — train / calibrate on labeled CSV (`--calibrate`)
-- Batch server: `scripts/batch_server.py` — lightweight POST `/predict` service
-- Models: `models/model.joblib` (sklearn) and `models/simple_model.json` (pure‑Python fallback)
-- Labeled training data: `data/labeled_training_samples.csv`
-- Documentation and judge assets: see `downloads/DOCUMENTATION.md`
-Features (competition-ready)
-Run (recommended):
+The project is tuned for hackathon demos and judge walkthroughs: it ships with a polished Streamlit UI, a CLI demo, a lightweight batch endpoint, and both trained and pure-Python fallback models.
+
+## What is included
+
+- `app.py` - Streamlit UI with explainability, batch input, and export support
+- `run_demo.py` - CLI demo that writes `demo_output.json`
+- `scripts/train_model.py` - train or calibrate on `text,label` CSV data
+- `scripts/batch_server.py` - lightweight POST `/predict` endpoint for batch checks
+- `models/model.joblib` - sklearn model, when trained
+- `models/simple_model.json` - pure-Python fallback model for offline use
+- `data/labeled_training_samples.csv` - small labeled dataset kept for calibration/demo only
+- `AI Generated Essays Dataset.csv` - larger Kaggle dataset used as the default training source
+- `downloads/DOCUMENTATION.md` - setup, architecture, testing, and submission notes
+- `ROMAN_URDU_README.md` - judge-friendly Roman-Urdu explainer
+
+## Why this design
+
+- Explainable: the app shows feature contributions and token highlights, not just a label
+- Practical: it works online with sklearn and offline with the fallback classifier
+- Demo-ready: the UI and docs are structured for a short, live presentation
+
+## Quick start
+
+Activate the virtual environment and run the app:
+
 ```powershell
 & ".venv-1\Scripts\Activate.ps1"
 python -m streamlit run app.py
 ```
-- High-level explainable detection pipeline (feature extraction → heuristic detector → explainer)
-If you need an offline install, use the `wheels/` folder and install with `--no-index --find-links`.
-- Clean, presentation-focused UI with quick-samples and one-click demo flow
-For judges: the Roman‑Urdu explainer is in `ROMAN_URDU_README.md` and a printable PDF is available via `scripts/markdown_to_pdf.py`.
-- Reproducible environment: `requirements.txt` and `.env.example`
-See `downloads/DOCUMENTATION.md` for architecture, libraries, setup checklist, and submission instructions.
-- Deliverables-ready: `README.md`, `submission-checklist.md`, and `demo_script_template.md`
 
-Why this approach?
-- Rapid implementation: all components are Python-based to minimise integration overhead.
-- Explainability: judges value interpretable reasoning; contributions chart shows why a verdict was reached.
-- Presentation-first: UI and demo script designed to fit a 5-minute recording and live judge walkthrough.
+If you want the CLI demo instead:
 
-Quick start
-
-1. Create a virtual environment and install dependencies:
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate   # Windows
-pip install -r requirements.txt
+```powershell
+& ".venv-1\Scripts\Activate.ps1"
+python run_demo.py
 ```
 
-2. Run the demo UI (Streamlit):
+To train or recalibrate on labeled data:
 
-```bash
-python -m venv .venv
-.venv\Scripts\activate  # Windows
-pip install -r requirements.txt
-streamlit run app.py
+```powershell
+& ".venv-1\Scripts\Activate.ps1"
+python scripts\train_model.py
 ```
 
-If you prefer a single-step (using the workspace Python):
+If you want to recalibrate on the small local CSV instead:
 
-```bash
-"C:/Program Files/Python313/python.exe" -m pip install -r requirements.txt
-"C:/Program Files/Python313/python.exe" -m streamlit run app.py
+```powershell
+python scripts\train_model.py --calibrate data\labeled_training_samples.csv
 ```
 
-Optional: train the lightweight classifier (recommended for better accuracy):
+The Kaggle dataset run also saves a calibration snapshot to `models/calibration.json` for reference.
 
-```bash
-python scripts/train_model.py
+To run batch predictions:
+
+```powershell
+& ".venv-1\Scripts\Activate.ps1"
+python scripts\batch_server.py
 ```
 
-This creates `models/model.joblib` which the app will load automatically if present.
+Then POST JSON like `{"texts": ["sample 1", "sample 2"]}` to `http://localhost:8000/predict`.
 
-Files created
-- `app.py` — Streamlit demo launcher
-- `src/feature_extractor.py` — feature extraction utilities
-- `src/detector.py` — detection logic
-- `src/explainer.py` — explainability helpers
-- `.env.example` — example environment variables
-- `requirements.txt` — Python deps
-- `submission-checklist.md` — final deliverables checklist
-- `demo_script_template.md` — 5-minute demo script template
+## Offline install
 
-Notes
-- This is a prototype with heuristic detection intended for demonstration. Replace heuristics with a trained model for production accuracy.
+If network access is unstable, install from the bundled wheels folder:
+
+```powershell
+& ".venv-1\Scripts\Activate.ps1"
+python -m pip install --no-index --find-links="wheels" scikit-learn scipy joblib threadpoolctl
+```
+
+## Documentation
+
+- Architecture, setup, and submission checklist: `downloads/DOCUMENTATION.md`
+- Judge script and demo flow: `demo_script_template.md`
+- Final handoff checklist: `submission-checklist.md`
+
+## Deploy
+
+### Option 1: Render (recommended)
+
+This repository now includes `render.yaml`, `Procfile`, and `runtime.txt`.
+
+1. Push this repo to GitHub.
+2. In Render, create a new Web Service from the repo.
+3. Render auto-detects `render.yaml`; if prompted manually use:
+	- Build command: `pip install -r requirements.txt`
+	- Start command: `streamlit run app.py --server.address=0.0.0.0 --server.port=$PORT`
+4. Deploy and open the generated URL.
+
+### Option 2: Streamlit Community Cloud
+
+1. Push this repo to GitHub.
+2. Go to Streamlit Community Cloud and create a new app.
+3. Set:
+	- Main file path: `app.py`
+	- Python version: `3.11`
+4. Deploy.
+
+### Local production-like run
+
+```powershell
+python -m streamlit run app.py --server.headless true --server.port 8501
+```
+
+## Notes
+
+- This repository is a prototype for demos and judging, not a production-grade detector.
+- Accuracy improves when you add more labeled examples and retrain with `scripts/train_model.py`.
